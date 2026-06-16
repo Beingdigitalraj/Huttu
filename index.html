@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>HUTTU PRO - #1 Secure AI Multi-Exchange Trading Bot, Staking & Web3 Gaming</title>
+    <meta name="description" content="HUTTU PRO is the world's fastest, safest, and most secure automated 24x7 multi-exchange trading platform. Earn lifetime MLM commissions up to 70%.">
+    <meta name="keywords" content="Huttu Pro, Crypto Trading Bot, Binance API Bot, High-Yield Crypto Staking, Web3 Gaming Hub, Secure Crypto MLM">
+    <meta name="robots" content="index, follow">
+    
+    <style>
+        :root {
+            --bg-color: #0b0e11;
+            --card-color: #181a20;
+            --text-color: #eaecef;
+            --primary-color: #f0b90b; /* Crypto Yellow */
+            --success-color: #2ebd85;
+            --secondary-color: #9b51e0; /* Gaming Purple */
+            --danger-color: #f6465d;
+            --border-color: #2b2f36;
+            --shield-color: #00e676; 
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--card-color);
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+        .logo { font-size: 24px; font-weight: bold; color: var(--primary-color); }
+        .btn-connect {
+            background-color: var(--primary-color);
+            color: #000;
+            border: none;
+            padding: 10px 20px;
+            font-weight: bold;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+        .section-title { text-align: center; color: var(--primary-color); margin-top: 50px; text-transform: uppercase; letter-spacing: 1px; }
+        
+        .security-shield-banner {
+            background: linear-gradient(135deg, #0d2b1a 0%, #111418 100%);
+            border: 1px solid var(--shield-color);
+            border-radius: 10px;
+            padding: 15px 20px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .shield-status { color: var(--shield-color); font-weight: bold; }
+        
+        /* Promotion Card Styling */
+        .promo-card {
+            background: linear-gradient(135deg, #1b1437 0%, #181a20 100%);
+            border: 1px solid var(--secondary-color);
+            border-radius: 10px;
+            padding: 25px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; margin-top: 20px; }
+        .card { background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 10px; padding: 20px; text-align: center; transition: 0.3s; }
+        .card:hover { border-color: var(--primary-color); transform: translateY(-5px); }
+        .price { font-size: 28px; color: var(--success-color); font-weight: bold; margin: 10px 0; }
+        .staking-card { border-left: 4px solid var(--success-color); }
+        .gaming-card { border-left: 4px solid var(--secondary-color); }
+        
+        .btn-game { background-color: var(--secondary-color); color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer; margin-top: 10px; font-weight: bold; }
+        .api-panel { background-color: var(--card-color); border: 1px solid var(--primary-color); border-radius: 10px; padding: 30px; margin-top: 40px; }
+        .form-group { margin-bottom: 20px; }
+        .form-group label { display: block; margin-bottom: 8px; color: #848e9c; }
+        .form-group input, .form-group select { width: 100%; padding: 12px; background-color: #121418; border: 1px solid var(--border-color); border-radius: 5px; color: white; box-sizing: border-box; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background-color: var(--card-color); border-radius: 10px; overflow: hidden; }
+        th, td { padding: 15px; text-align: left; border-bottom: 1px solid var(--border-color); }
+        th { background-color: var(--border-color); color: var(--primary-color); }
+
+        .chat-container { background-color: var(--card-color); border: 1px solid var(--border-color); border-radius: 10px; margin-top: 40px; overflow: hidden; }
+        .chat-header { background-color: var(--border-color); padding: 15px; font-weight: bold; display: flex; justify-content: space-between; }
+        .chat-messages { height: 200px; padding: 15px; overflow-y: auto; background-color: #121418; }
+        .chat-input-area { display: flex; border-top: 1px solid var(--border-color); }
+        .chat-input-area input { flex: 1; background: none; border: none; padding: 15px; color: white; outline: none; }
+        .chat-input-area button { background-color: var(--primary-color); border: none; padding: 0 25px; font-weight: bold; cursor: pointer; }
+        .system-msg { color: #848e9c; font-size: 14px; font-style: italic; text-align: center; }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.8.1/web3.min.js"></script>
+</head>
+<body>
+
+    <header>
+        <div class="logo">HUTTU PRO</div>
+        <button class="btn-connect" id="walletBtn" onclick="connectWallet()">Connect Wallet</button>
+    </header>
+
+    <div class="container">
+        
+        <div class="security-shield-banner">
+            <div class="shield-status">🛡️ SURAKSHA KAVACH SYSTEM: SECURE</div>
+            <div style="font-size: 14px; color: #848e9c;" id="firewallLogs">🛡️ 24x7 Multi-Bot Guard Active...</div>
+        </div>
+
+        <div style="text-align: center; margin: 30px 0;">
+            <h1>The Ultimate 24x7 Safe & Secure Crypto Ecosystem</h1>
+            <p style="color: #848e9c;">Multi-Exchange Auto Bot | High-Yield Staking | Play-to-Earn Gaming | Lifetime Commissions</p>
+        </div>
+
+        <h2 class="section-title">📢 Share & Earn Promotion Network</h2>
+        <div class="promo-card">
+            <h3>Boost HUTTU PRO & Earn Lifetime Rewards</h3>
+            <p style="color: #848e9c;">Promote your unique link below. Invite friends to unlock 7-Level Direct Commissions instantly!</p>
+            <div class="form-group" style="max-width: 600px; margin: 20px auto 10px auto;">
+                <input type="text" id="referralLinkInput" value="https://beingdigitalraj.github.io/HUTTU-PRO/?ref=connect_wallet" readonly style="text-align: center; color: var(--primary-color); font-weight: bold; letter-spacing: 0.5px;">
+            </div>
+            <button class="btn-connect" style="background-color: var(--secondary-color); color: white;" onclick="copyReferralLink()">Copy Promo Link</button>
+        </div>
+
+        <h2 class="section-title">🔑 Encrypted Multi-Exchange API Setup</h2>
+        <div class="api-panel">
+            <p style="color: var(--success-color); margin-top: 0;">🔒 <strong>Anti-Hacking Protocol:</strong> API keys are processed via safe memory. Withdrawal features are strict-blocked.</p>
+            
+            <div class="form-group">
+                <label>Select Crypto Exchange (24x7 Auto Trade)</label>
+                <select id="exchangeSelect">
+                    <option value="Binance">Binance (Recommended)</option>
+                    <option value="Bybit">Bybit</option>
+                    <option value="OKX">OKX</option>
+                    <option value="KuCoin">KuCoin</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label>Exchange API Key</label>
+                <input type="text" id="apiKey" placeholder="Enter your Exchange API Key...">
+            </div>
+            <div class="form-group">
+                <label>Exchange Secret Key</label>
+                <input type="password" id="secretKey" placeholder="Enter your Exchange Secret Key...">
+            </div>
+            <button class="btn-connect" style="width: 100%; padding: 15px;" onclick="saveExchangeAPI()">Activate 24x7 Auto Trading Bot</button>
+            <p id="apiStatus" style="text-align: center; margin-top: 15px; color: #848e9c; font-weight: bold;"></p>
+        </div>
+
+        <h2 class="section-title">🤖 AI Trading Bot Packages</h2>
+        <div class="grid">
+            <div class="card">
+                <h3>Popular</h3>
+                <div class="price">$100 - $500</div>
+                <p>10,000 Trading Power</p>
+                <p style="color: var(--success-color);">Expected: $500+</p>
+            </div>
+            <div class="card">
+                <h3>Advanced</h3>
+                <div class="price">$501 - $1500</div>
+                <p>50,000 Trading Power</p>
+                <p style="color: var(--success-color);">Expected: $2500+</p>
+            </div>
+            <div class="card">
+                <h3>Pro</h3>
+                <div class="price">$1501 - $5000</div>
+                <p>100,000 Trading Power</p>
+                <p style="color: var(--success-color);">Expected: $5000+</p>
+            </div>
+            <div class="card">
+                <h3>Expert</h3>
+                <div class="price">$5011 - $10000</div>
+                <p>300,000 Trading Power</p>
+                <p style="color: var(--success-color);">Expected: $15000+</p>
+            </div>
+        </div>
+
+        <h2 class="section-title">💰 High-Yield Staking Pools</h2>
+        <div class="grid">
+            <div class="card staking-card">
+                <h3>Flexible Pool</h3>
+                <div class="apr">12% APR</div>
+                <p>Lock Duration: No Lock</p>
+                <button class="btn-connect" style="width: 100%; margin-top: 10px;">Make Deposit</button>
+            </div>
+            <div class="card staking-card">
+                <h3>Standard Pool</h3>
+                <div class="apr">24% APR</div>
+                <p>Lock Duration: 30 Days</p>
+                <button class="btn-connect" style="width: 100%; margin-top: 10px;">Make Deposit</button>
+            </div>
+            <div class="card staking-card">
+                <h3>Max Booster Pool</h3>
+                <div class="apr">48% APR</div>
+                <p>Lock Duration: 90 Days</p>
+                <button class="btn-connect" style="width: 100%; margin-top: 10px;">Make Deposit</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">🎮 Web3 Gaming Area (Play-To-Earn)</h2>
+        <div class="grid">
+            <div class="card gaming-card">
+                <h3>Lucky Spin Wheel</h3>
+                <p>Multiply your crypto with a single spin.</p>
+                <button class="btn-game" onclick="launchGame('Spin Wheel')">Play Game</button>
+            </div>
+            <div class="card gaming-card">
+                <h3>Crypto Coin Flip</h3>
+                <p>50/50 Chance. Double your entry instantly.</p>
+                <button class="btn-game" onclick="launchGame('Coin Flip')">Play Game</button>
+            </div>
+            <div class="card gaming-card">
+                <h3>Lucky Dice Roll</h3>
+                <p>Predict the number and win big rewards.</p>
+                <button class="btn-game" onclick="launchGame('Dice Roll')">Play Game</button>
+            </div>
+        </div>
+
+        <h2 class="section-title">👥 7-Level Lifetime Commission Scale</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Rank Level</th>
+                    <th>Requirement</th>
+                    <th>Direct Commission</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>T1 - Starter</td><td>Default / New Member</td><td>10%</td></tr>
+                <tr><td>T2 - Bronze</td><td>3 Direct Referrals</td><td>20%</td></tr>
+                <tr><td>T3 - Silver</td><td>5 Direct Referrals</td><td>30%</td></tr>
+                <tr><td>T4 - Gold</td><td>8 Direct Referrals</td><td>40%</td></tr>
+                <tr><td>T5 - Platinum</td><td>12 Direct Referrals</td><td>50%</td></tr>
+                <tr><td>T6 - Diamond</td><td>20 Direct Referrals</td><td>60%</td></tr>
+                <tr><td>T7 - Global Elite</td><td>30 Direct Referrals</td><td>70%</td></tr>
+            </tbody>
+        </table>
+
+        <h2 class="section-title">Verified Members Live Chat</h2>
+        <div class="chat-container">
+            <div class="chat-header">
+                <span>💬 Global Room</span>
+                <span style="color: var(--success-color); font-size: 14px;">🛡️ Anti-Spam Security Activated</span>
+            </div>
+            <div class="chat-messages" id="chatBox">
+                <p class="system-msg">[System Security: Only verified accounts approved by admin can chat.]</p>
+                <p><strong>Raj (Admin):</strong> Welcome to HUTTU PRO Global Secure Hub! 🚀</p>
+            </div>
+            <div class="chat-input-area">
+                <input type="text" id="chatInput" placeholder="Verify package to type a message..." disabled>
+                <button id="chatSendBtn" onclick="sendMessage()" disabled>Send</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
