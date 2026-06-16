@@ -68,3 +68,33 @@ contract HuttuProMLM {
         payable(owner).transfer(address(this).balance);
     }
 }
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.0;
+
+contract HuttuStaking {
+    mapping(address => uint256) public stakedBalance;
+    mapping(address => uint256) public lastStakedTime;
+    uint256 public constant rewardRate = 5; // 5% सालाना रिटर्न का उदाहरण
+
+    // टोकन स्टेक करने के लिए
+    function stake() external payable {
+        require(msg.value > 0, "Amount must be greater than 0");
+        stakedBalance[msg.sender] += msg.value;
+        lastStakedTime[msg.sender] = block.timestamp;
+    }
+
+    // रिवॉर्ड कैलकुलेट करने का फंक्शन
+    function calculateReward(address _user) public view returns (uint256) {
+        uint256 timeStaked = block.timestamp - lastStakedTime[_user];
+        return (stakedBalance[_user] * rewardRate * timeStaked) / (365 days * 100);
+    }
+
+    // रिवॉर्ड के साथ पैसा निकालने के लिए
+    function withdraw() external {
+        uint256 reward = calculateReward(msg.sender);
+        uint256 totalAmount = stakedBalance[msg.sender] + reward;
+        
+        stakedBalance[msg.sender] = 0;
+        payable(msg.sender).transfer(totalAmount);
+    }
+}
