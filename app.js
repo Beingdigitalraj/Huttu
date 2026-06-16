@@ -129,3 +129,24 @@ function sendMessage() {
         chatBox.scrollTop = chatBox.scrollHeight; 
     }
 }
+// Firebase की कॉन्फ़िगरेशन सेट करें
+const firebaseConfig = {
+  // यहाँ अपने Firebase प्रोजेक्ट की 'SDK config' डालें
+};
+// firebase.initializeApp(firebaseConfig);
+// const db = firebase.database();
+
+// लाइव चैटिंग का फंक्शन
+function sendMessage() {
+    const msg = document.getElementById("chatInput").value;
+    // db.ref('messages').push({ text: msg, time: Date.now() });
+    alert("Message Sent: " + msg);
+}
+
+// लाइव प्राइस अपडेट (Binance WebSocket)
+const ws = new WebSocket('wss://stream.binance.com:9443/ws/btcusdt@ticker');
+ws.onmessage = (event) => {
+    const data = JSON.parse(event.data);
+    document.getElementById("price").innerText = "$" + parseFloat(data.c).toFixed(2);
+};
+
